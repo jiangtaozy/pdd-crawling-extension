@@ -14,5 +14,6 @@
   "page_action": {
     "default_popup": "popup.html"
   },
+  "devtools_page": "devtools.html",
   "manifest_version": 2
 }

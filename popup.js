@@ -130,6 +130,7 @@ loopUnit.onclick = function(element) {
     let code = `
       iframe = document.querySelector("iframe.pmsIframe").contentDocument;
       i = 0;
+      start = Date.now();
       function clickUnit() {
         unit = iframe.querySelectorAll("div.SearchUnitTable_adName__taldH > span.SearchUnitTable_pointer__2ZZ-Q");
         if(i < unit.length / 2) {
@@ -139,8 +140,12 @@ loopUnit.onclick = function(element) {
             i++;
             setTimeout(function() {
               clickUnit();
-            }, 500);
-          }, 500);
+            }, 100);
+          }, 100);
+        } else {
+          now = Date.now();
+          usedTime = (now - start) / 1000;
+          alert('遍历完成，用时：' + usedTime + 's，' + (Math.round(usedTime / i * 100) / 100) + 's/个');
         }
       }
       clickUnit();
