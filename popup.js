@@ -156,3 +156,57 @@ loopUnit.onclick = function(element) {
     )
   })
 };
+
+let changeCrowdThirty = document.getElementById('changeCrowdThirty');
+let changeCrowdForty = document.getElementById('changeCrowdForty');
+let changeCrowdSixty = document.getElementById('changeCrowdSixty');
+let changeCrowd120 = document.getElementById('changeCrowd120');
+let changeCrowd300 = document.getElementById('changeCrowd300');
+
+changeCrowdThirty.onclick = changeCrowdPrice(30);
+changeCrowdForty.onclick = changeCrowdPrice(40);
+changeCrowdSixty.onclick = changeCrowdPrice(60);
+changeCrowd120.onclick = changeCrowdPrice(120);
+changeCrowd300.onclick = changeCrowdPrice(300);
+
+function changeCrowdPrice(price) {
+  return function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      let code = `
+        iframe = document.querySelector("iframe.pmsIframe").contentDocument;
+        crowdButton = iframe.querySelectorAll('div.TAB_card_-769496290');
+        crowdButton[1].click();
+        changeIcon = iframe.querySelectorAll('i[data-tracking="93094"]');
+        start = Date.now();
+        i = 0;
+        function changeIconPrice() {
+          if(i < changeIcon.length) {
+            changeIcon[i].click();
+            setTimeout(function() {
+              popup = iframe.querySelector('div.PT_outerWrapper_-769496290');
+              priceInput = popup.querySelector('input.IPT_input_-769496290');
+              priceInput.value = ${price};
+              priceInput.dispatchEvent(new Event("change", { bubbles: true }));
+              priceInput.dispatchEvent(new Event("blur", { bubbles: true }));
+              confirmButton = popup.querySelector('button.BTN_outerWrapper_-769496290');
+              confirmButton.click();
+              i++;
+              setTimeout(function() {
+                changeIconPrice();
+              }, 600);
+            }, 10);
+          } else {
+            now = Date.now();
+            usedTime = (now - start) / 1000;
+            alert('操作完成，用时：' + usedTime + 's，' + (Math.round(usedTime / i * 100) / 100) + 's/个');
+          }
+        }
+        changeIconPrice();
+      `;
+      chrome.tabs.executeScript(
+        tabs[0].id,
+        {code: code}
+      );
+    });
+  }
+}
