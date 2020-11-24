@@ -210,3 +210,38 @@ function changeCrowdPrice(price) {
     });
   }
 }
+
+// 修改出价
+let priceAdOneCentButton = document.getElementById('priceAddOneCent');
+let selectedPriceAdOneCentButton = document.getElementById('selectedPriceAddOneCent');
+priceAdOneCentButton.onclick = adOneCent(0.01, true);
+selectedPriceAdOneCentButton.onclick = adOneCent(0.01, false);
+function adOneCent(price, selectAll) {
+  return function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      let code = `
+        iframe = document.querySelector("iframe.pmsIframe").contentDocument;
+        if(${selectAll}) {
+          checkBox = iframe.querySelector('div.KeywordCheckBox_checkBox__7D8ZZ')
+          checkBox.click();
+        }
+        priceButton = iframe.querySelector('div.KeywordPanel_btns__kaHRQ > button.BTN_gray_-769496290')
+        priceButton.click();
+        iconPrice = document.querySelectorAll('i.ICN_outerWrapper_-769496290.ICN_type-radio-circle_filled_-769496290.RD_circleInner_-769496290.RD_radioCircle_-769496290')[1];
+        iconPrice.click();
+        inputPrice = document.querySelectorAll('span.ant-input-wrapper > input.ant-input')[0];
+        inputPrice.value = ${price};
+        inputPrice.dispatchEvent(new Event("change", { bubbles: true }));
+        inputPrice.dispatchEvent(new Event("blur", { bubbles: true }));
+        commitButton = document.querySelector('button.BTN_outerWrapper_-769496290.BTN_primary_-769496290');
+        commitButton.click();
+        reConfirmButton = document.querySelector('div.changeModal_popConfirmFooter__3soJB > button.BTN_outerWrapper_-769496290');
+        reConfirmButton.click();
+      `;
+      chrome.tabs.executeScript(
+        tabs[0].id,
+        {code: code}
+      );
+    });
+  }
+}
