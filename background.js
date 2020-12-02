@@ -1,9 +1,14 @@
 chrome.runtime.onInstalled.addListener(function() {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostEquals: 'mms.pinduoduo.com'},
-      })],
+      conditions: [
+        new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: {hostEquals: 'mms.pinduoduo.com'},
+        }),
+        new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: {hostEquals: 'yingxiao.pinduoduo.com'},
+        }),
+      ],
       actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);
   });

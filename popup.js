@@ -4,12 +4,11 @@ let fetchThreeMonth = document.getElementById('fetchThreeMonth');
 fetchThreeMonth.onclick = function(element) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     let code = `
-      iframe = document.querySelector("iframe.pmsIframe").contentDocument;
 
-      link = iframe.querySelector('input');
+      link = document.querySelector('input');
       link.click();
 
-      button = iframe.querySelector('footer.RPR_footerWrapper_-769496290 > button[data-testid="beast-core-button')
+      button = document.querySelector('footer.RPR_footerWrapper_-769496290 > button[data-testid="beast-core-button')
 
       loopTd = (td) => {
         for(let i = 0; i < td.length; i++) {
@@ -25,13 +24,13 @@ fetchThreeMonth.onclick = function(element) {
         }
       }
 
-      td = iframe.querySelectorAll('td.RPR_tdDay_-769496290');
+      td = document.querySelectorAll('td.RPR_tdDay_-769496290');
       loopTd(td)
 
-      iconPrev = iframe.querySelector('i[data-testid="iconPrev-0"]')
+      iconPrev = document.querySelector('i[data-testid="iconPrev-0"]')
       iconPrev.click();
       
-      table = iframe.querySelectorAll('div.RPR_tableWrapper_-769496290')
+      table = document.querySelectorAll('div.RPR_tableWrapper_-769496290')
       tdPrev = table[0].querySelectorAll('td.RPR_tdDay_-769496290');
       loopTd(tdPrev)
 
@@ -51,12 +50,11 @@ let fetchThisMonth = document.getElementById('fetchThisMonth');
 fetchThisMonth.onclick = function(element) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     let code = `
-      iframe = document.querySelector("iframe.pmsIframe").contentDocument;
 
-      link = iframe.querySelector('input');
+      link = document.querySelector('input');
       link.click();
 
-      button = iframe.querySelector('footer.RPR_footerWrapper_-769496290 > button[data-testid="beast-core-button')
+      button = document.querySelector('footer.RPR_footerWrapper_-769496290 > button[data-testid="beast-core-button')
 
       loopTd = (td) => {
         for(let i = 0; i < td.length; i++) {
@@ -72,7 +70,7 @@ fetchThisMonth.onclick = function(element) {
         }
       }
 
-      table = iframe.querySelectorAll('div.RPR_tableWrapper_-769496290')
+      table = document.querySelectorAll('div.RPR_tableWrapper_-769496290')
       tdNext = table[1].querySelectorAll('td.RPR_tdDay_-769496290');
       loopTd(tdNext)
     `;
@@ -95,10 +93,9 @@ function changeExactPrice(price) {
   return function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       let code = `
-        iframe = document.querySelector("iframe.pmsIframe").contentDocument;
-        checkBox = iframe.querySelector('div.KeywordCheckBox_checkBox__7D8ZZ')
+        checkBox = document.querySelector('div.KeywordCheckBox_checkBox__7D8ZZ')
         checkBox.click();
-        exactButton = iframe.querySelector('div.KeywordPanel_btns__kaHRQ > span > button.BTN_outerWrapper_-769496290')
+        exactButton = document.querySelector('div.KeywordPanel_btns__kaHRQ > span > button.BTN_outerWrapper_-769496290')
         exactButton.click();
         setTimeout(function(){
           let exactInput = document.querySelector('div.IPT_inputBlockCell_-769496290 > input[data-testid="beast-core-input-htmlInput"]');
@@ -128,11 +125,10 @@ let loopUnit = document.getElementById('loopUnit');
 loopUnit.onclick = function(element) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     let code = `
-      iframe = document.querySelector("iframe.pmsIframe").contentDocument;
       i = 0;
       start = Date.now();
       function clickUnit() {
-        unit = iframe.querySelectorAll("div.SearchUnitTable_adName__taldH > span.SearchUnitTable_pointer__2ZZ-Q");
+        unit = document.querySelectorAll("div.SearchUnitTable_adName__taldH > span.SearchUnitTable_pointer__2ZZ-Q");
         if(i < unit.length / 2) {
           unit[i].click();
           setTimeout(function() {
@@ -173,17 +169,16 @@ function changeCrowdPrice(price) {
   return function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       let code = `
-        iframe = document.querySelector("iframe.pmsIframe").contentDocument;
-        crowdButton = iframe.querySelectorAll('div.TAB_card_-769496290');
+        crowdButton = document.querySelectorAll('div.TAB_card_-769496290');
         crowdButton[1].click();
-        changeIcon = iframe.querySelectorAll('i[data-tracking="93094"]');
+        changeIcon = document.querySelectorAll('i[data-tracking="93094"]');
         start = Date.now();
         i = 0;
         function changeIconPrice() {
           if(i < changeIcon.length) {
             changeIcon[i].click();
             setTimeout(function() {
-              popup = iframe.querySelector('div.PT_outerWrapper_-769496290');
+              popup = document.querySelector('div.PT_outerWrapper_-769496290');
               priceInput = popup.querySelector('input.IPT_input_-769496290');
               priceInput.value = ${price};
               priceInput.dispatchEvent(new Event("change", { bubbles: true }));
@@ -212,28 +207,46 @@ function changeCrowdPrice(price) {
 }
 
 // 修改出价
-let priceAdOneCentButton = document.getElementById('priceAddOneCent');
-let selectedPriceAdOneCentButton = document.getElementById('selectedPriceAddOneCent');
-priceAdOneCentButton.onclick = adOneCent(0.01, true);
-selectedPriceAdOneCentButton.onclick = adOneCent(0.01, false);
-function adOneCent(price, selectAll) {
+let priceAddOneCentButton = document.getElementById('priceAddOneCent');
+let priceCutOneCentButton = document.getElementById('priceCutOneCent');
+let selectedPriceAddOneCentButton = document.getElementById('selectedPriceAddOneCent');
+let selectedPriceCutOneCentButton = document.getElementById('selectedPriceCutOneCent');
+let priceChangeToTenCentButton = document.getElementById('priceChangeToTenCent');
+priceAddOneCentButton.onclick = changeOneCent(0.01, true);
+priceCutOneCentButton.onclick = changeOneCent(0.01, true, true);
+selectedPriceAddOneCentButton.onclick = changeOneCent(0.01, false);
+selectedPriceCutOneCentButton.onclick = changeOneCent(0.01, false, true);
+priceChangeToTenCentButton.onclick = changeOneCent(0.1, true, false, true);
+function changeOneCent(price, selectAll, isCut, isChangeTo) {
   return function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       let code = `
-        iframe = document.querySelector("iframe.pmsIframe").contentDocument;
         if(${selectAll}) {
-          checkBox = iframe.querySelector('div.KeywordCheckBox_checkBox__7D8ZZ')
+          checkBox = document.querySelector('div.KeywordCheckBox_checkBox__7D8ZZ')
           checkBox.click();
         }
-        priceButton = iframe.querySelector('div.KeywordPanel_btns__kaHRQ > button.BTN_gray_-769496290')
+        priceButton = document.querySelector('div.KeywordPanel_btns__kaHRQ > button.anq-btn-default')
         priceButton.click();
-        iconPrice = document.querySelectorAll('i.ICN_outerWrapper_-769496290.ICN_type-radio-circle_filled_-769496290.RD_circleInner_-769496290.RD_radioCircle_-769496290')[1];
+        iconIndex = 1;
+        if(${isCut}) {
+          iconIndex = 2;
+        } else if(${isChangeTo}) {
+          iconIndex = 0;
+        }
+        iconPrice = document.querySelector('div.changeModal_modalBody__fy9aI.changeModal_flexStart__NrXei').querySelectorAll('label')[iconIndex];
         iconPrice.click();
-        inputPrice = document.querySelectorAll('span.ant-input-wrapper > input.ant-input')[0];
+        inputIndex = 0;
+        if(${isCut}) {
+          inputIndex = 1;
+        }
+        inputPrice = document.querySelectorAll('span.ant-input-wrapper > input.ant-input')[inputIndex];
+        if(${isChangeTo}) {
+          inputPrice = document.querySelectorAll('div.IPT_inputBlockCell_-769496290 > input.IPT_input_-769496290')[2];
+        }
         inputPrice.value = ${price};
         inputPrice.dispatchEvent(new Event("change", { bubbles: true }));
         inputPrice.dispatchEvent(new Event("blur", { bubbles: true }));
-        commitButton = document.querySelector('button.BTN_outerWrapper_-769496290.BTN_primary_-769496290');
+        commitButton = document.querySelector('div.changeModal_footer__3F7t9 > button.BTN_outerWrapper_-769496290.BTN_primary_-769496290');
         commitButton.click();
         reConfirmButton = document.querySelector('div.changeModal_popConfirmFooter__3soJB > button.BTN_outerWrapper_-769496290');
         reConfirmButton.click();
