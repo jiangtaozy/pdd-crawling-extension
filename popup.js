@@ -158,14 +158,18 @@ let changeCrowdForty = document.getElementById('changeCrowdForty');
 let changeCrowdSixty = document.getElementById('changeCrowdSixty');
 let changeCrowd120 = document.getElementById('changeCrowd120');
 let changeCrowd300 = document.getElementById('changeCrowd300');
+let changeCrowdCutTen = document.getElementById('changeCrowdCutTen');
+let changeCrowdAddTen = document.getElementById('changeCrowdAddTen');
 
 changeCrowdThirty.onclick = changeCrowdPrice(30);
 changeCrowdForty.onclick = changeCrowdPrice(40);
 changeCrowdSixty.onclick = changeCrowdPrice(60);
 changeCrowd120.onclick = changeCrowdPrice(120);
 changeCrowd300.onclick = changeCrowdPrice(300);
+changeCrowdCutTen.onclick = changeCrowdPrice(10, true);
+changeCrowdAddTen.onclick = changeCrowdPrice(10, false, true);
 
-function changeCrowdPrice(price) {
+function changeCrowdPrice(price, isCut, isAdd) {
   return function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       let code = `
@@ -180,7 +184,13 @@ function changeCrowdPrice(price) {
             setTimeout(function() {
               popup = document.querySelector('div.PT_outerWrapper_-769496290');
               priceInput = popup.querySelector('input.IPT_input_-769496290');
-              priceInput.value = ${price};
+              if(${isCut}) {
+                priceInput.value = parseInt(priceInput.value) - ${price};
+              } else if(${isAdd}) {
+                priceInput.value = parseInt(priceInput.value) + ${price};
+              } else {
+                priceInput.value = ${price};
+              }
               priceInput.dispatchEvent(new Event("change", { bubbles: true }));
               priceInput.dispatchEvent(new Event("blur", { bubbles: true }));
               confirmButton = popup.querySelector('button.BTN_outerWrapper_-769496290');
