@@ -173,7 +173,7 @@ function changeCrowdPrice(price, isCut, isAdd) {
   return function() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       let code = `
-        crowdButton = document.querySelectorAll('div.TAB_card_-769496290');
+        crowdButton = document.querySelectorAll('div.TAB_card_-1816545062.TAB_tabItem_-1816545062.TAB_transition_-1816545062');
         crowdButton[1].click();
         changeIcon = document.querySelectorAll('i[data-tracking="93094"]');
         start = Date.now();
@@ -182,8 +182,8 @@ function changeCrowdPrice(price, isCut, isAdd) {
           if(i < changeIcon.length) {
             changeIcon[i].click();
             setTimeout(function() {
-              popup = document.querySelector('div.PT_outerWrapper_-769496290');
-              priceInput = popup.querySelector('input.IPT_input_-769496290');
+              popup = document.querySelector('div.PP_popoverContent_-1816545062');
+              priceInput = popup.querySelector('input.IPT_input_-1816545062');
               if(${isCut}) {
                 priceInput.value = parseInt(priceInput.value) - ${price};
               } else if(${isAdd}) {
@@ -193,7 +193,7 @@ function changeCrowdPrice(price, isCut, isAdd) {
               }
               priceInput.dispatchEvent(new Event("change", { bubbles: true }));
               priceInput.dispatchEvent(new Event("blur", { bubbles: true }));
-              confirmButton = popup.querySelector('button.BTN_outerWrapper_-769496290');
+              confirmButton = popup.querySelector('button.BTN_outerWrapper_-1816545062.BTN_primary_-1816545062.BTN_small_-1816545062.BTN_outerWrapperBtn_-1816545062');
               confirmButton.click();
               i++;
               setTimeout(function() {
