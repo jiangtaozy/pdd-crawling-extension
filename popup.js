@@ -95,10 +95,10 @@ function changeExactPrice(price) {
       let code = `
         checkBox = document.querySelector('div.KeywordCheckBox_checkBox__7D8ZZ')
         checkBox.click();
-        exactButton = document.querySelector('div.KeywordPanel_btns__kaHRQ > span > button.BTN_outerWrapper_-769496290')
+        exactButton = document.querySelector('div.KeywordPanel_btns__kaHRQ > span > button.anq-btn.anq-btn-default')
         exactButton.click();
         setTimeout(function(){
-          let exactInput = document.querySelector('div.IPT_inputBlockCell_-769496290 > input[data-testid="beast-core-input-htmlInput"]');
+          let exactInput = document.querySelector('div.IPT_inputBlockCell_-1816545062 > input[data-testid="beast-core-input-htmlInput"]');
           exactInput.setAttribute('value', ${price});
           exactInput.dispatchEvent(new Event("change", { bubbles: true }));
           exactInput.dispatchEvent(new Event("blur", { bubbles: true }));
