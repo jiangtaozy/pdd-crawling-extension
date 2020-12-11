@@ -81,13 +81,15 @@ fetchThisMonth.onclick = function(element) {
   })
 };
 
-let changePrice = document.getElementById('changePrice');
-let changePriceForty = document.getElementById('changePriceForty');
-let changePriceFifty = document.getElementById('changePriceFifty');
+let changeExactPrice10 = document.getElementById('changeExactPrice10');
+let changeExactPrice30 = document.getElementById('changeExactPrice30');
+let changeExactPriceForty = document.getElementById('changeExactPriceForty');
+let changeExactPriceFifty = document.getElementById('changeExactPriceFifty');
 
-changePrice.onclick = changeExactPrice('30');
-changePriceForty.onclick = changeExactPrice('40');
-changePriceFifty.onclick = changeExactPrice('50');
+changeExactPrice10.onclick = changeExactPrice('10');
+changeExactPrice30.onclick = changeExactPrice('30');
+changeExactPriceForty.onclick = changeExactPrice('40');
+changeExactPriceFifty.onclick = changeExactPrice('50');
 
 function changeExactPrice(price) {
   return function() {
@@ -153,21 +155,29 @@ loopUnit.onclick = function(element) {
   })
 };
 
+let changeCrowd10 = document.getElementById('changeCrowd10');
 let changeCrowdThirty = document.getElementById('changeCrowdThirty');
 let changeCrowdForty = document.getElementById('changeCrowdForty');
 let changeCrowdSixty = document.getElementById('changeCrowdSixty');
 let changeCrowd120 = document.getElementById('changeCrowd120');
+let changeCrowd175 = document.getElementById('changeCrowd175');
 let changeCrowd300 = document.getElementById('changeCrowd300');
 let changeCrowdCutTen = document.getElementById('changeCrowdCutTen');
 let changeCrowdAddTen = document.getElementById('changeCrowdAddTen');
+let changeCrowdCut33 = document.getElementById('changeCrowdCut33');
+let changeCrowdAdd33 = document.getElementById('changeCrowdAdd33');
 
+changeCrowd10.onclick = changeCrowdPrice(10);
 changeCrowdThirty.onclick = changeCrowdPrice(30);
 changeCrowdForty.onclick = changeCrowdPrice(40);
 changeCrowdSixty.onclick = changeCrowdPrice(60);
 changeCrowd120.onclick = changeCrowdPrice(120);
+changeCrowd175.onclick = changeCrowdPrice(175);
 changeCrowd300.onclick = changeCrowdPrice(300);
 changeCrowdCutTen.onclick = changeCrowdPrice(10, true);
 changeCrowdAddTen.onclick = changeCrowdPrice(10, false, true);
+changeCrowdCut33.onclick = changeCrowdPrice(33, true);
+changeCrowdAdd33.onclick = changeCrowdPrice(33, false, true);
 
 function changeCrowdPrice(price, isCut, isAdd) {
   return function() {
