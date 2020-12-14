@@ -17,6 +17,7 @@ chrome.devtools.network.onRequestFinished.addListener(
         }
         catch(err) {
           console.error("err: ", err);
+          alert(err);
         }
       });
     }
