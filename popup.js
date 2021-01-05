@@ -266,9 +266,9 @@ function changeOneCent(price, selectAll, isCut, isChangeTo) {
         inputPrice.value = ${price};
         inputPrice.dispatchEvent(new Event("change", { bubbles: true }));
         inputPrice.dispatchEvent(new Event("blur", { bubbles: true }));
-        commitButton = document.querySelector('div.changeModal_footer__3F7t9 > button.BTN_outerWrapper_-769496290.BTN_primary_-769496290');
+        commitButton = document.querySelector('div.changeModal_footer__3F7t9 > button.BTN_outerWrapper_-1816545062.BTN_primary_-1816545062');
         commitButton.click();
-        reConfirmButton = document.querySelector('div.changeModal_popConfirmFooter__3soJB > button.BTN_outerWrapper_-769496290');
+        reConfirmButton = document.querySelector('div.changeModal_popConfirmFooter__3soJB > button.BTN_outerWrapper_-1816545062.BTN_primary_-1816545062');
         reConfirmButton.click();
       `;
       chrome.tabs.executeScript(
