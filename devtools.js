@@ -9,6 +9,7 @@ chrome.devtools.network.onRequestFinished.addListener(
       url === 'https://yingxiao.pinduoduo.com/apollo/api/report/queryHourlyReport' ||
       url === 'https://mms.pinduoduo.com/mangkhut/mms/recentOrderList' ||
       url === 'https://mms.pinduoduo.com/sydney/api/goodsDataShow/queryGoodsDetailVOList' ||
+      url === 'https://mms.pinduoduo.com/sydney/api/goodsDataShow/queryGoodsPageOverView' ||
       url === 'https://mms.pinduoduo.com/vodka/v2/mms/query/display/mall/goodsList') {
       request.getContent(async function(content, encoding) {
         try {
