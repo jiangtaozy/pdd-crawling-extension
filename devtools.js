@@ -16,13 +16,17 @@ chrome.devtools.network.onRequestFinished.addListener(
       url === 'https://mms.pinduoduo.com/sydney/api/goodsDataShow/queryGoodsDetailVOList' ||
       // 流量数据
       url === 'https://mms.pinduoduo.com/sydney/api/goodsDataShow/queryGoodsPageOverView' ||
+      // 售后列表
+      url === 'https://mms.pinduoduo.com/mercury/mms/afterSales/queryList' ||
       // 商品列表
-      url === 'https://mms.pinduoduo.com/vodka/v2/mms/query/display/mall/goodsList') {
+      url === 'https://mms.pinduoduo.com/vodka/v2/mms/query/display/mall/goodsList' ||
+      // 女装网订单列表
+      url.includes('https://www.hznzcn.com/order/query_my_order_list')) {
       request.getContent(async function(content, encoding) {
         try {
           await axios.post('http://localhost:7000/saveNetworkData', {
             requestUrl: url,
-            requestText: postData.text,
+            requestText: postData && postData.text,
             responseContent: content,
           });
         }

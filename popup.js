@@ -228,11 +228,17 @@ function changeCrowdPrice(price, isCut, isAdd) {
 
 // 修改出价
 let priceAddOneCentButton = document.getElementById('priceAddOneCent');
+let priceAddTwoCentButton = document.getElementById('priceAddTwoCent');
+let priceAddFourCentButton = document.getElementById('priceAddFourCent');
+let priceAddEightCentButton = document.getElementById('priceAddEightCent');
 let priceCutOneCentButton = document.getElementById('priceCutOneCent');
 let selectedPriceAddOneCentButton = document.getElementById('selectedPriceAddOneCent');
 let selectedPriceCutOneCentButton = document.getElementById('selectedPriceCutOneCent');
 let priceChangeToTenCentButton = document.getElementById('priceChangeToTenCent');
 priceAddOneCentButton.onclick = changeOneCent(0.01, true);
+priceAddTwoCentButton.onclick = changeOneCent(0.02, true);
+priceAddFourCentButton.onclick = changeOneCent(0.04, true);
+priceAddEightCentButton.onclick = changeOneCent(0.08, true);
 priceCutOneCentButton.onclick = changeOneCent(0.01, true, true);
 selectedPriceAddOneCentButton.onclick = changeOneCent(0.01, false);
 selectedPriceCutOneCentButton.onclick = changeOneCent(0.01, false, true);
@@ -266,10 +272,36 @@ function changeOneCent(price, selectAll, isCut, isChangeTo) {
         inputPrice.value = ${price};
         inputPrice.dispatchEvent(new Event("change", { bubbles: true }));
         inputPrice.dispatchEvent(new Event("blur", { bubbles: true }));
-        commitButton = document.querySelector('div.changeModal_footer__3F7t9 > button.BTN_outerWrapper_-1816545062.BTN_primary_-1816545062');
+        commitButton = document.querySelector('div.changeModal_footer__3F7t9 > button.BTN_outerWrapper_17eihtg.BTN_primary_17eihtg.BTN_medium_17eihtg.BTN_outerWrapperBtn_17eihtg');
         commitButton.click();
-        reConfirmButton = document.querySelector('div.changeModal_popConfirmFooter__3soJB > button.BTN_outerWrapper_-1816545062.BTN_primary_-1816545062');
+        reConfirmButton = document.querySelector('div.changeModal_popConfirmFooter__3soJB > button.BTN_outerWrapper_17eihtg.BTN_primary_17eihtg.BTN_small_17eihtg.BTN_outerWrapperBtn_17eihtg');
         reConfirmButton.click();
+      `;
+      chrome.tabs.executeScript(
+        tabs[0].id,
+        {code: code}
+      );
+    });
+  }
+}
+
+// 出价
+let priceAddOneButton = document.getElementById('priceAddOne');
+priceAddOneButton.onclick = priceAddOne();
+function priceAddOne() {
+  return function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      let code = `
+        priceAddOneButton = document.querySelector('.ICN_outerWrapper_17eihtg.ICN_type-edit_17eihtg');
+        priceAddOneButton.click();
+        inputPriceAdd = document.querySelector('div.PT_portalMain_17eihtg.PP_popoverMain_17eihtg').querySelector('input.IPT_input_17eihtg');
+        setTimeout(function() {
+          inputPriceAdd.setAttribute('value', (parseInt(inputPriceAdd.value) + 1).toString());
+          inputPriceAdd.dispatchEvent(new Event("change", { bubbles: true }));
+          inputPriceAdd.dispatchEvent(new Event("blur", { bubbles: true }));
+          confirmButton = document.querySelector('div.PT_portalMain_17eihtg.PP_popoverMain_17eihtg').querySelector('button.BTN_outerWrapper_17eihtg.BTN_primary_17eihtg.BTN_small_17eihtg.BTN_outerWrapperBtn_17eihtg');
+          //confirmButton.click();
+        }, 1000)
       `;
       chrome.tabs.executeScript(
         tabs[0].id,

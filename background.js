@@ -8,6 +8,9 @@ chrome.runtime.onInstalled.addListener(function() {
         new chrome.declarativeContent.PageStateMatcher({
           pageUrl: {hostEquals: 'yingxiao.pinduoduo.com'},
         }),
+        new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: {hostEquals: 'www.hznzcn.com'},
+        }),
       ],
       actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);
