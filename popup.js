@@ -310,3 +310,80 @@ function priceAddOne() {
     });
   }
 }
+
+// 推广重置
+let adResetButton = document.getElementById('adReset');
+adResetButton.onclick = adReset();
+function adReset() {
+  return function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      let code = `
+        // 智能词包
+        aiKeysButton = document.querySelector('.SIH_outerWrapper_17eihtg.SIH_medium_17eihtg.SIH_active_17eihtg');
+        if(aiKeysButton) {
+          aiKeysButton.click();
+        }
+        setTimeout(function() {
+          aiKeysConfirmButton = document.querySelector('.BTN_outerWrapper_17eihtg.PP_popoverOk_17eihtg.BTN_primary_17eihtg.BTN_small_17eihtg.BTN_outerWrapperBtn_17eihtg');
+          if(aiKeysConfirmButton) {
+            aiKeysConfirmButton.click();
+          }
+          // 流量拓展包
+          flowButton = document.querySelector('.SIH_outerWrapper_17eihtg.SIH_medium_17eihtg.SIH_active_17eihtg');
+          if(flowButton) {
+            flowButton.click();
+          }
+          setTimeout(function() {
+            flowConfirmButton = document.querySelector('.BTN_outerWrapper_17eihtg.PP_popoverOk_17eihtg.BTN_primary_17eihtg.BTN_small_17eihtg.BTN_outerWrapperBtn_17eihtg');
+            if(flowConfirmButton) {
+              flowConfirmButton.click()
+            }
+            // 关键词
+            allKeysCheckbox = document.querySelector('.CBX_outerWrapper_17eihtg.CBX_checkbox_17eihtg.CBX_medium_17eihtg.CBX_active_17eihtg');
+            if(allKeysCheckbox) {
+              allKeysCheckbox.click();
+            }
+            // 自定义出价
+            priceCheckboxList = document.querySelectorAll('.RD_outerWrapper_17eihtg.RD_large_17eihtg.RD_radio_17eihtg');
+            customPriceCheckbox = priceCheckboxList[priceCheckboxList.length - 1];
+            if(customPriceCheckbox) {
+              customPriceCheckbox.click();
+            }
+            setTimeout(function() {
+              writeButtonList = document.querySelectorAll('.ICN_outerWrapper_17eihtg.ICN_type-edit_17eihtg');
+              customPriceWriteButton = writeButtonList[1];
+              if(customPriceWriteButton) {
+                customPriceWriteButton.click();
+              }
+              inputList = document.querySelectorAll('.IPT_input_17eihtg');
+              customPriceInput = inputList[1];
+              customPriceInput.setAttribute('value', 0.1);
+              customPriceInput.dispatchEvent(new Event("change", { bubbles: true }));
+              customPriceInput.dispatchEvent(new Event("blur", { bubbles: true }));
+              // 自动调价
+              autoPriceCheckbox = document.querySelector('.SIH_outerWrapper_17eihtg.SIH_medium_17eihtg.SIH_active_17eihtg');
+              if(autoPriceCheckbox) {
+                autoPriceCheckbox.click();
+              }
+              setTimeout(function() {
+                autoPriceConfirmButton = document.querySelector('.BTN_outerWrapper_17eihtg.PP_popoverOk_17eihtg.BTN_primary_17eihtg.BTN_small_17eihtg.BTN_outerWrapperBtn_17eihtg');
+                if(autoPriceConfirmButton) {
+                  autoPriceConfirmButton.click();
+                }
+                // 人群溢价
+                groupCheckboxList = document.querySelectorAll('.CBX_outerWrapper_17eihtg.CBX_checkbox_17eihtg.CBX_medium_17eihtg.CBX_active_17eihtg');
+                for(let i = 0; i < groupCheckboxList.length; i++) {
+                  groupCheckboxList[i].click();
+                }
+              }, 500);
+            }, 500);
+          }, 500);
+        }, 500);
+      `;
+      chrome.tabs.executeScript(
+        tabs[0].id,
+        {code: code}
+      );
+    });
+  }
+}
