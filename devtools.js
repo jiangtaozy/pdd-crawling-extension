@@ -48,6 +48,7 @@ chrome.devtools.network.onRequestFinished.addListener(
         //chrome.devtools.inspectedWindow.eval('console.log("*******post savenetworkdata")');
         try {
           await axios.post('http://121.42.24.117:7000/saveNetworkData', {
+          //await axios.post('http://127.0.0.1:7000/saveNetworkData', {
             requestUrl: url,
             requestText: postData && postData.text,
             responseContent: content,
