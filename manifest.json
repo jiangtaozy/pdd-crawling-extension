@@ -1,19 +1,14 @@
 {
+  "manifest_version": 3,
   "name": "pdd crawling extension",
   "version": "1.0",
-  "description": "pdd crawling extension",
+  "devtools_page": "devtools.html",
   "permissions": [
     "activeTab",
-    "storage",
-    "declarativeContent"
+    "scripting",
+    "contextMenus"
   ],
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
-  "page_action": {
-    "default_popup": "popup.html"
-  },
-  "devtools_page": "devtools.html",
-  "manifest_version": 2
+    "service_worker": "background.js"
+  }
 }
